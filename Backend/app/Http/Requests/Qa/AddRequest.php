@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Qa;
 
 use App\Http\Resources\ErrorResource;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-class RegisterRequest extends FormRequest
+class AddRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,12 +27,13 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'     => 'required|string|min:2|max:20',
-            'email'    => 'required|email|min:8|max:30|unique:users',
-            'password' => 'required|string|min:8',
-        ];
+          	'quize_id' => 'required',
+            'quotaion' => 'required|string',
+            'answer' => 'required',
+            'options' => 'required',
+            'status' => 'required',
+        ]; 
     }
-
     /**
      * Handle a failed validation attempt.
      *

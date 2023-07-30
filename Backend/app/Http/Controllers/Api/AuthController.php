@@ -23,7 +23,7 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->validated();  
         $this->createUser($data);
         $response['message'] = 'Successfully Registered! Now, Login!';
         return new SuccessResource($response);

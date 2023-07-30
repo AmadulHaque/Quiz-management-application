@@ -5,21 +5,24 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Quize;
+use App\Models\Qa;
 use Illuminate\Support\Facades\Validator;
 
-use App\Http\Requests\Quize\AddRequest;
+use App\Http\Requests\Qa\AddRequest;
 use App\Services\QuizeService;
-use App\Http\Resources\SuccessResource;
-class QuizeControllerler extends Controller
+use App\Services\QaService;
+use App\Http\Resources\SuccessResource; 
+
+class QaController extends Controller
 {
-    use QuizeService;
+    use QaService,QuizeService;
    
  /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $quizes = Quize::all();
+        $quizes = Qa::all();
         return response()->json([
             'success' => true,
             'message' => 'All quizes',
@@ -34,8 +37,8 @@ class QuizeControllerler extends Controller
     {
         $data = $request->validated();
         // store a new post
-        $this->createQuize($data);
-        return new SuccessResource($data);
+        $res = $this->createQa($data);
+        return new SuccessResource($res);
     }
 
     /**
@@ -43,7 +46,7 @@ class QuizeControllerler extends Controller
      */
     public function show($id)
     {
-        $data =$this->Quize($id);
+        $data =$this->Qa($id);
          return [
             'success' => true,
             'message' => "success",
@@ -56,7 +59,7 @@ class QuizeControllerler extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AddRequest $request, Quize $quize)
+    public function update(AddRequest $request, Qa $quize)
     {
         $data = $request->validated();
         $quize->update($data);
@@ -66,13 +69,10 @@ class QuizeControllerler extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Quize $quize)
+    public function destroy(Qa $id)
     {
-        $quize->delete();
-        return new SuccessResource($quize);
+        Qa::where('id',$id)->delete();
+        return new SuccessResource($id);
     }
-
-
-
 
 }

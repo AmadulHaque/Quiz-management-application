@@ -14,9 +14,5 @@ class Quize extends Model
         'mark',
         'status'
     ];
-    public static function getByStatus($id)
-    {
-        $data = self::where('id',$id)->where('status',1)->latest('id')->first();
-        return $data;
-    }
+  
 }
